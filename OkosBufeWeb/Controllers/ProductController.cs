@@ -31,4 +31,24 @@ public class ProductController : Controller
         // 2. Odaadjuk a HTML Nézetnek 
         return View(products);
     }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken] // Beépített védelem
+    public IActionResult Create(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges(); 
+
+            return RedirectToAction("Index");
+        }
+        return View(product);
+    }
+
 }

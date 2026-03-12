@@ -1,0 +1,43 @@
+@model OkosBufeWeb.Models.Product
+
+@{
+    ViewData["Title"] = "Új Termék";
+}
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Új termék felvétele az étlapra</h2>
+    
+    <div class="row">
+        <div class="col-md-6 shadow-sm p-4 bg-light rounded">
+            <form asp-action="Create" method="post">
+                
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label fw-bold">Termék neve</label>
+                    <input asp-for="Name" class="form-control" placeholder="pl. Dupla Sajtburger" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label fw-bold">Ár (Ft)</label>
+                    <input asp-for="Price" class="form-control" placeholder="pl. 2500" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-bold">Leírás (Opcionális)</label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4 form-check">
+                    <input asp-for="IsAvailable" class="form-check-input" checked />
+                    <label asp-for="IsAvailable" class="form-check-label">Azonnal rendelhető</label>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 mb-2">Mentés az adatbázisba</button>
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">Mégse / Vissza a listához</a>
+                
+            </form>
+        </div>
+    </div>
+</div>
