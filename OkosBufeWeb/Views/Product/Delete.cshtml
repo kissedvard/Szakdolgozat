@@ -1,0 +1,37 @@
+@model OkosBufeWeb.Models.Product
+
+@{
+    ViewData["Title"] = "Termék Törlése";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger mb-4">Biztosan törölni szeretnéd ezt a terméket?</h2>
+    
+    <div class="row">
+        <div class="col-md-6 shadow-sm p-4 bg-light rounded border border-danger">
+            
+            <form asp-action="Delete" method="post">
+                <input asp-for="Id" hidden />
+                
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label fw-bold">Termék neve</label>
+                    <input asp-for="Name" class="form-control" disabled />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label fw-bold">Ár (Ft)</label>
+                    <input asp-for="Price" class="form-control" disabled />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-bold">Leírás</label>
+                    <textarea asp-for="Description" class="form-control" rows="3" disabled></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-danger w-100 mb-2">Igen, véglegesen törlöm</button>
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">Mégse, visszalépek</a>
+                
+            </form>
+        </div>
+    </div>
+</div>

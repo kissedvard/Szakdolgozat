@@ -46,9 +46,66 @@ public class ProductController : Controller
             _context.Products.Add(product);
             _context.SaveChanges(); 
 
+            TempData["success"] = "A termék sikeresen felvéve az étlapra!";
+
             return RedirectToAction("Index");
         }
         return View(product);
     }
 
+    public IActionResult Edit(int? id)
+    {
+        if (id == null || id == 0) return NotFound();
+
+        var productFromDb = _context.Products.Find(id);
+
+        if (productFromDb == null) return NotFound();
+
+        return View(productFromDb);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.Products.Update(product); 
+            _context.SaveChanges();
+            
+            TempData["success"] = "A termék sikeresen módosítva!"; 
+            return RedirectToAction("Index");
+        }
+        return View(product);
+    }
+
+    public IActionResult Delete(int? id)
+    {
+        if (id == null || id == 0) return NotFound();
+
+        var productFromDb = _context.Products.Find(id);
+
+        if (productFromDb == null) return NotFound();
+
+        return View(productFromDb);
+    }
+
+    
+    [HttpPost, ActionName("Delete")] 
+    [ValidateAntiForgeryToken]
+    
+    public IActionResult DeletePOST(int? id)
+    {
+        // Törlendő elem megkeresése
+        var product = _context.Products.Find(id);
+        if (product == null) return NotFound();
+
+        // Törlés
+        _context.Products.Remove(product);
+        _context.SaveChanges();
+        
+        
+        TempData["success"] = "A termék sikeresen törölve az étlapról!";
+        return RedirectToAction("Index");
+    }
 }
