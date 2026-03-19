@@ -1,0 +1,37 @@
+@model IEnumerable<OkosBufeWeb.Models.Product>
+
+@{
+    ViewData["Title"] = "Főoldal - Étlap";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4 text-primary fw-bold">Rendeld meg kedvenceidet!</h1>
+    <p class="lead">Válaszd ki a kedvenceidet, és rendeld meg sorban állás nélkül.</p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">@item.Name</h5>
+                    <h6 class="text-success fw-bold mb-3">@item.Price Ft</h6>
+                    <p class="card-text text-muted small">@item.Description</p>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-3">
+                    <a href="#" class="btn btn-primary w-100 rounded-pill">
+                        <i class="bi bi-cart-plus"></i> Kosárba teszem
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning text-center">
+        Jelenleg nincs elérhető termék a büfében. Kérjük, nézz vissza később!
+    </div>
+}

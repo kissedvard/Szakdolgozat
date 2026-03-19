@@ -14,7 +14,7 @@ public class ProductController : Controller
     }
 
     public IActionResult Index()
-    {
+    {   
         // TESZT ADATOK!!!
         if (!_context.Products.Any())
         {

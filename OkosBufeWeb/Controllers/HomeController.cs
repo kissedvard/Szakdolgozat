@@ -1,19 +1,36 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OkosBufeWeb.Models;
+using OkosBufeWeb.Data;
 
 namespace OkosBufeWeb.Controllers;
 
 public class HomeController : Controller
 {
+
+    private readonly ApplicationDbContext _context;
+
+    public HomeController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
     public IActionResult Index()
     {
-        return View();
+        return View();  
     }
 
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    public IActionResult Menu()
+    {
+        var availableProducts = _context.Products
+                                .Where(p => p.IsAvailable == true)
+                                .ToList();
+        
+        return View(availableProducts);  
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

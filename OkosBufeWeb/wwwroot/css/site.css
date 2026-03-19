@@ -29,3 +29,52 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.feature-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .feature-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important; }
+    .hero-bg {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 1rem;
+    }
+
+/* 1. A normál (Book) betűtípus */
+@font-face {
+    font-family: 'EtoFutura';
+    src: url('../fonts/FuturaPTBook.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 2. A vastag (Bold) betűtípus */
+@font-face {
+    font-family: 'EtoFutura';
+    src: url('../fonts/FuturaPTBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+:root {
+    /* Színek */
+    --bs-primary: #366E40 !important;
+    --bs-secondary: #B5955C !important;
+    --bs-body-bg: #F4F2EB !important;
+    
+    /* Gombok körüli glow effekt */
+    --bs-primary-rgb: 54, 110, 64;
+    --bs-secondary-rgb: 181, 149, 92;
+
+    /* Betűtípus globális cseréje! */
+    --bs-font-sans-serif: 'EtoFutura', system-ui, -apple-system, sans-serif !important;
+    --bs-body-font-family: var(--bs-font-sans-serif) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #2B5934; 
+    border-color: #2B5934;
+}

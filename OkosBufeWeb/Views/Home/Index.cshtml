@@ -1,8 +1,82 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Üdvözlünk";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<!-- 1. SZEKCIÓ: Hero (Kiemelt fejléc) -->
+<div class="container my-5">
+    <div class="row p-5 pb-0 pe-lg-0 pt-lg-5 align-items-center hero-bg shadow-sm">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3 text-center text-lg-start">
+            <h1 class="display-4 fw-bold lh-1 mb-3 text-primary">Rendelj okosan,<br /> ne állj sorba!</h1>
+            <p class="lead mb-4">Az ETO Okos Büfé elhozza neked a kényelmet. Állítsd össze a rendelésedet a telefonodon még az óra alatt, és vedd át frissen a szünetben, várakozás nélkül.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+                <!-- Ez a gomb viszi át a felhasználót az új étlap (Menu) oldalra! -->
+                <a asp-controller="Home" asp-action="Menu" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Éhes vagyok, rendelek!</a>
+                <a href="#how-it-works" class="btn btn-outline-secondary btn-lg px-4">Hogyan működik?</a>
+            </div>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden text-center">
+            <!-- Ide tehetsz majd egy szép illusztrációt! -->
+            <i class="bi bi-phone text-primary" style="font-size: 15rem; opacity: 0.8;"></i>
+        </div>
+    </div>
+</div>
+
+<!-- 2. SZEKCIÓ: Interaktív Funkció Kártyák -->
+<div class="container px-4 py-5" id="how-it-works">
+    <h2 class="pb-2 border-bottom text-center mb-5">Miért használd az Okos Büfét?</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm feature-card p-4 text-center">
+                <i class="bi bi-clock-history text-success mb-3" style="font-size: 3rem;"></i>
+                <h4 class="fw-bold">Időt spórolsz</h4>
+                <p>Nincs több sorban állás a tízperces szünetekben. A rendelésed már várni fog rád, amikor odaérsz.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm feature-card p-4 text-center">
+                <i class="bi bi-bag-check text-primary mb-3" style="font-size: 3rem;"></i>
+                <h4 class="fw-bold">Egyszerű átvétel</h4>
+                <p>A konyha azonnal látja a beérkező rendelésed, így mindent frissen, a nevedre csomagolva kapsz meg.</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm feature-card p-4 text-center">
+                <i class="bi bi-credit-card text-warning mb-3" style="font-size: 3rem;"></i>
+                <h4 class="fw-bold">Gyors fizetés</h4>
+                <p>Készpénz vagy kártya? Te döntöd el az átvételkor, de a rendelésed összegét már előre pontosan látod.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. SZEKCIÓ: Gyakori Kérdések (Interaktív Accordion) -->
+<div class="container mb-5 w-75">
+    <h3 class="text-center mb-4">Gyakori Kérdések</h3>
+    <div class="accordion shadow-sm" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Mikor tudom átvenni a rendelésemet?
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    A megrendelt termékeket a következő óraközi szünetben, az erre kijelölt "Gyorssávban" (Fast Track) veheted át a büfénél.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Módosíthatom a leadott rendelést?
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    A rendelés leadása után a rendszer egyből a konyhára küldi a blokkot, így utólagos módosításra a felületen már nincs lehetőség.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
