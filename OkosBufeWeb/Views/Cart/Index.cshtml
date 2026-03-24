@@ -1,0 +1,83 @@
+@model IEnumerable<OkosBufeWeb.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Kosár";
+}
+
+<h2 class="mb-4">A te kosarad</h2>
+
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-5">
+        <h4>A kosarad jelenleg üres.</h4>
+        <p class="text-muted">Nézz körül az étlapunkon és válassz valami finomat!</p>
+        <a asp-controller="Home" asp-action="Menu" class="btn btn-primary mt-3">Vissza a menühöz</a>
+    </div>
+}
+else
+{
+    <div class="row">
+        <!-- Bal oldal: Kosár tartalma (Left Side: Cart Items) -->
+        <div class="col-lg-8 col-md-12 mb-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Termék neve</th>
+                            <th>Ár</th>
+                            <th>Mennyiség</th>
+                            <th>Részösszeg</th>
+                            <th>Műveletek</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><strong>@item.ProductName</strong></td>
+                                <td>@item.Price.ToString("N0") Ft</td> 
+                                <td>@item.Quantity db</td>
+                                <td>@((item.Price * item.Quantity).ToString("N0")) Ft</td> 
+                                <td>
+                                    <a asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId" class="btn btn-danger btn-sm">Törlés</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Jobb oldal: Összesítő (Right Side: Order Summary) -->
+        <div class="col-lg-4 col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Rendelés összesítő</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Tételek száma:</span>
+                        <span><strong>@Model.Sum(i => i.Quantity) db</strong></span>
+                    </div>
+                    
+                    <hr />
+                    
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="fs-5">Végösszeg:</span>
+                        <span class="fs-4 fw-bold text-success">
+                            @Model.Sum(item => item.Price * item.Quantity).ToString("N0") Ft
+                        </span>
+                    </div>
+
+                    <a asp-controller="Cart" asp-action="Checkout" class="btn btn-success btn-lg w-100 mb-2">
+                        Tovább a fizetéshez
+                    </a>
+                    <a asp-controller="Home" asp-action="Menu" class="btn btn-outline-secondary w-100">
+                        Vissza a menühöz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
