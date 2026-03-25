@@ -78,3 +78,21 @@ body {
     background-color: #2B5934; 
     border-color: #2B5934;
 }
+
+
+.btn-primary:focus, 
+.btn-primary:active, 
+.btn-primary:focus-visible,
+.btn-primary.active {
+    background-color: #2b5c3f !important; 
+    border-color: #2b5c3f !important;
+    box-shadow: none !important; 
+    outline: none !important;
+}
+
+
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+    box-shadow: none !important;
+    outline: none !important;
+}

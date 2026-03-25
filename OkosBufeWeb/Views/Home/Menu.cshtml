@@ -1,7 +1,11 @@
 @model IEnumerable<OkosBufeWeb.Models.Product>
+@using Microsoft.AspNetCore.Http
+@using OkosBufeWeb.Helpers
 
 @{
     ViewData["Title"] = "Főoldal - Étlap";
+    // 1. Lekérjük a kosár aktuális tartalmát a memóriából!
+    var cart = Context.Session.GetObjectFromJson<List<OkosBufeWeb.Models.CartItem>>("Cart") ?? new List<OkosBufeWeb.Models.CartItem>();
 }
 
 <div class="text-center mb-5">
@@ -9,10 +13,22 @@
     <p class="lead">Válaszd ki a kedvenceidet, és rendeld meg sorban állás nélkül.</p>
 </div>
 
+@if (TempData["Success"] != null)
+{
+    <div id="toast-alert" class="alert alert-success alert-dismissible fade show shadow-lg position-fixed" 
+         style="top: 80px; right: 20px; z-index: 9999; min-width: 300px;" 
+         role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
     {
+        var cartItem = cart.FirstOrDefault(c => c.ProductId == item.Id);
+        int quantityInCart = cartItem != null ? cartItem.Quantity : 0;
+
         <div class="col">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body text-center">
@@ -20,10 +36,32 @@
                     <h6 class="text-success fw-bold mb-3">@item.Price Ft</h6>
                     <p class="card-text text-muted small">@item.Description</p>
                 </div>
+                
                 <div class="card-footer bg-white border-0 text-center pb-3">
-                    <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="btn btn-primary w-100 rounded-pill">
-                        <i class="bi bi-cart-plus"></i> Kosárba teszem
-                    </a>
+                    @if (quantityInCart == 0)
+                    {
+                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="btn btn-primary w-100 rounded-pill fw-bold">
+                            <i class="bi bi-cart-plus"></i> Kosárba teszem
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="btn btn-primary w-100 rounded-pill d-flex justify-content-between align-items-center px-4 user-select-none">
+                            
+                            <a href="javascript:void(0)" onclick="updateQuantity(@item.Id, 'decrease')" class="text-white text-decoration-none fw-bold fs-5">
+                                <i class="fa-solid fa-minus"></i>
+                            </a>
+                            
+                            <span class="text-white fw-bold pointer-event-none" id="qty-@item.Id">
+                                @quantityInCart db
+                            </span>
+                            
+                            <a href="javascript:void(0)" onclick="updateQuantity(@item.Id, 'add')" class="text-white text-decoration-none fw-bold fs-5">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
+
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -32,7 +70,7 @@
 
 @if (!Model.Any())
 {
-    <div class="alert alert-warning text-center">
+    <div class="alert alert-warning text-center mt-4">
         Jelenleg nincs elérhető termék a büfében. Kérjük, nézz vissza később!
     </div>
 }

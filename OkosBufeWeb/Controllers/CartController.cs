@@ -47,10 +47,11 @@ public class CartController : Controller
                 Price = product.Price,
                 Quantity = 1
             });
+
+            TempData["Success"] = $"{product.Name} sikeresen bekerült a kosárba!";
         }
         HttpContext.Session.SetObjectAsJson("Cart", cart);
 
-        TempData["Success"] = $"{product.Name} sikeresen bekerült a kosárba!";
         return RedirectToAction("Menu", "Home");
     }
 
@@ -65,10 +66,64 @@ public class CartController : Controller
             cart.Remove(itemToRemove);
 
             HttpContext.Session.SetObjectAsJson("Cart", cart);
-
+            
             TempData["Success"] = $"{itemToRemove.ProductName} sikeresen törölve lett a kosárból!";
         }
 
         return RedirectToAction("Index");
+    }
+
+    public IActionResult Decrease(int id)
+    {
+        var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+        var existingItem = cart.FirstOrDefault(c => c.ProductId == id);
+
+        if (existingItem != null)
+        {
+            existingItem.Quantity--;
+
+            if (existingItem.Quantity <= 0)
+            {
+                cart.Remove(existingItem);
+            }
+        }
+
+        HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+        return RedirectToAction("Menu", "Home");
+    }
+
+    public IActionResult UpdateCartAjax(int id, string operation)
+    {
+        var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+        var existingItem = cart.FirstOrDefault(c => c.ProductId == id);
+
+        int currentQuantity = 0;
+
+        if (existingItem != null)
+        {
+            if (operation == "add")
+            {
+                existingItem.Quantity++;
+            }
+            else if (operation == "decrease")
+            {
+                existingItem.Quantity--;
+            }
+
+            if (existingItem.Quantity <= 0)
+            {
+                cart.Remove(existingItem);
+                currentQuantity = 0;
+            }
+            else
+            {
+                currentQuantity = existingItem.Quantity;
+            }
+        }
+        HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+        return Json(new {quantity = currentQuantity});
     }
 }
