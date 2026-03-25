@@ -22,12 +22,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
     if (sikerUzenet) {
         setTimeout(function() {
-            sikerUzenet.classList.remove('show');
+            sikerUzenet.classList.remove('toast-appear-animacio');
+            sikerUzenet.classList.add('toast-disappear-animacio');
             
             setTimeout(function() {
                 sikerUzenet.remove();
-            }, 150);
-            
+            }, 500);
         }, 3000); 
     }
 });
