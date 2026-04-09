@@ -13,15 +13,7 @@
     <p class="lead">Válaszd ki a kedvenceidet, és rendeld meg sorban állás nélkül.</p>
 </div>
 
-@if (TempData["Success"] != null)
-{
-    <div id="toast-alert" class="alert alert-success alert-dismissible shadow-lg position-fixed toast-appear-animacio" 
-         style="top: 80px; right: 20px; z-index: 9999; min-width: 300px;" 
-         role="alert">
-        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
+
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
     @foreach (var item in Model)
@@ -37,7 +29,7 @@
                     <p class="card-text text-muted small">@item.Description</p>
                 </div>
                 
-                <div class="card-footer bg-white border-0 text-center pb-3">
+                <div class="card-footer bg-transparent border-0 text-center pb-3">
                     @if (quantityInCart == 0)
                     {
                         <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="btn btn-primary w-100 rounded-pill fw-bold">

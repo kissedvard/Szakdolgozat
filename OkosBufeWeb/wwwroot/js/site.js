@@ -17,7 +17,6 @@ function updateQuantity(productId, operation) {
 
 // Felugró zöld üzenet automatikus eltüntetése 
 document.addEventListener("DOMContentLoaded", function() {
-    // Most már a konkrét ID alapján keressük meg a lebegő üzenetet!
     let sikerUzenet = document.getElementById('toast-alert');
     
     if (sikerUzenet) {

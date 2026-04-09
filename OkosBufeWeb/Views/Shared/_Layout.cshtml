@@ -40,6 +40,18 @@
             </div>
         </nav>
     </header>
+    <div id="toast-container" class="position-fixed" style="top: 80px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;">
+        @if (TempData["Success"] != null)
+        {
+            <div id="toast-alert" class="alert alert-success alert-dismissible shadow-lg position-fixed toast-appear-animacio" 
+                 style="top: 80px; right: 20px; z-index: 9999; min-width: 300px;" 
+                 role="alert">
+                <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             
