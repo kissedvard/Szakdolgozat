@@ -31,8 +31,31 @@
                             <a class="nav-link text-danger" asp-area="" asp-controller="Product" asp-action="Index">Termék Admin</a>
                         </li>
                     </ul>
-                    <div class="d-flex align-items-center ms-auto">
-                        <a asp-controller="Cart" asp-action="Index" class="btn btn-primary rounded-circle shadow-sm d-flex justify-content-center align-items-center" style="width: 48px; height: 48px; transition: transform 0.2s;">
+                    <div class="d-flex align-items-center gap-4 ms-auto">
+                        <ul class="navbar-nav ms-auto"> @if (User.Identity!.IsAuthenticated)
+                            {
+                                <li class="nav-item me-2">
+                                    <a class="btn btn-primary fw-bold px-3 " asp-controller="Account" asp-action="Login">
+                                        Bejelentkezés
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+                                        <button type="submit" class="nav-link btn btn-link text-danger fw-bold border-0">Kijelentkezés</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link btn btn-primary fw-bold px-3" asp-controller="Account" asp-action="Login">
+                                        Bejelentkezés
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                                            
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-primary rounded-circle shadow-sm d-flex justify-content-center align-items-center flex-shrink-0" style="width: 48px; height: 48px; transition: transform 0.2s;">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </a>
                     </div>

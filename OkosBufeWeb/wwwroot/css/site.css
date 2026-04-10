@@ -70,13 +70,16 @@ body {
 
 
 .btn-primary {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: white;
+    background-color: #347c47 !important; /* A Te alap zölded */
+    border-color: #347c47 !important;
+    color: white !important;
+    transition: all 0.3s ease !important;
 }
 .btn-primary:hover {
     background-color: #2B5934; 
     border-color: #2B5934;
+    transform: translateY(-2px) !important; /* Picit felemelkedik a gomb */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
 

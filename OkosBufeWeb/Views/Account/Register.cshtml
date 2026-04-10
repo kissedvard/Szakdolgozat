@@ -1,0 +1,59 @@
+@model OkosBufeWeb.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Regisztráció";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow border-0 rounded-3">
+            <div class="card-header bg-white border-bottom-0 text-center pt-4 pb-0">
+                <h2 class="fw-bold">Új fiók létrehozása</h2>
+                <p class="text-muted">Csatlakozz az okosbüféhez pár másodperc alatt</p>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Register" method="post">
+                    
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-bold"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="FullName" class="form-control" placeholder="Kovács István" />
+                        <label asp-for="FullName"></label>
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="nev@email.hu" />
+                        <label asp-for="Email"></label>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" class="form-control" placeholder="Jelszó" />
+                        <label asp-for="Password"></label>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Jelszó újra" />
+                        <label asp-for="ConfirmPassword"></label>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold mb-3">
+                        Regisztráció
+                    </button>
+
+                    <div class="text-center">
+                        <span class="text-muted">Már van fiókod?</span>
+                        <a asp-action="Login" class="text-decoration-none fw-bold">Lépj be itt!</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
