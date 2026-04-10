@@ -51,6 +51,8 @@ namespace OkosBufeWeb.Controllers
             }
             return View();
         }
+
+
         // Bejelentkezés 
 
         [HttpGet]
@@ -87,5 +89,20 @@ namespace OkosBufeWeb.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-    }
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login");
+            }
+            var model = new ProfileViewModel
+            {
+                FullName = user.FullName,
+                Email = user.Email!
+            };
+            return View(model);
+        }
+    }  
 }

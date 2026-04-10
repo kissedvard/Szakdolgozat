@@ -1,0 +1,43 @@
+@model OkosBufeWeb.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Fiókom";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow border-0 rounded-3 overflow-hidden">
+            <div class="card-header bg-primary text-white text-center py-5 border-0">
+                <i class="fa-solid fa-user-circle fa-5x mb-3"></i>
+                <h2 class="fw-bold mb-0">@Model.FullName</h2>
+                <p class="mb-0 text-white-50">Regisztrált Vásárló</p>
+            </div>
+            
+            <div class="card-body p-4">
+                <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom">Személyes adatok</h5>
+                
+                <div class="row mb-3">
+                    <div class="col-sm-4 text-muted">Teljes név</div>
+                    <div class="col-sm-8 fw-bold">@Model.FullName</div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-sm-4 text-muted">E-mail cím</div>
+                    <div class="col-sm-8 fw-bold">@Model.Email</div>
+                </div>
+
+                <div class="d-grid gap-2 mt-4 pt-3 border-top">
+                    <button class="btn btn-outline-primary fw-bold" disabled>
+                        <i class="fa-solid fa-clock-rotate-left"></i> Korábbi rendeléseim (Hamarosan)
+                    </button>
+
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-grid mt-2">
+                        <button type="submit" class="btn btn-danger fw-bold">
+                            <i class="fa-solid fa-right-from-bracket"></i> Kijelentkezés
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

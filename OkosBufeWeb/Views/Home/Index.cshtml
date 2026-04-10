@@ -22,33 +22,57 @@
     </div>
 </div>
 
-<!-- 2. SZEKCIÓ: Interaktív Funkció Kártyák -->
-<div class="container px-4 py-5" id="how-it-works">
-    <h2 class="pb-2 border-bottom text-center mb-5">Miért használd az Okos Büfét?</h2>
-    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        <div class="col">
-            <div class="card h-100 border-0 shadow-sm feature-card p-4 text-center">
-                <i class="bi bi-clock-history text-success mb-3" style="font-size: 3rem;"></i>
-                <h4 class="fw-bold">Időt spórolsz</h4>
-                <p>Nincs több sorban állás a tízperces szünetekben. A rendelésed már várni fog rád, amikor odaérsz.</p>
+@if (!User.Identity!.IsAuthenticated)
+{
+    <div class="container my-5 py-5 border-top">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Miért éri meg regisztrálni?</h2>
+            <p class="text-muted">Csatlakozz a rendszerhez, és felejtsd el a sorban állást!</p>
+        </div>
+
+        <div class="row g-4 text-center mb-5">
+            <div class="col-md-4">
+                <div class="p-4 bg-white rounded-4 h-100 shadow-sm border border-light" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <i class="fa-solid fa-mobile-screen-button fa-3x mb-3" style="color: #347c47;"></i>
+                    <h4 class="fw-bold">Rendelj mobilon</h4>
+                    <p class="text-muted mb-0">Állítsd össze a kedvenc szendvicsedet még a tanórán, pár kattintással.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="p-4 bg-white rounded-4 h-100 shadow-sm border border-light" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <i class="fa-solid fa-stopwatch fa-3x mb-3" style="color: #347c47;"></i>
+                    <h4 class="fw-bold">Nincs sorban állás</h4>
+                    <p class="text-muted mb-0">Csak besétálsz a szünetben, és azonnal átveszed a névre szóló csomagodat.</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="p-4 bg-white rounded-4 h-100 shadow-sm border border-light" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <i class="fa-solid fa-burger fa-3x mb-3" style="color: #347c47;"></i>
+                    <h4 class="fw-bold">Garantáltan friss</h4>
+                    <p class="text-muted mb-0">A rendelésed alapján frissen készítjük el, pontosan arra a szünetre.</p>
+                </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card h-100 border-0 shadow-sm feature-card p-4 text-center">
-                <i class="bi bi-bag-check text-primary mb-3" style="font-size: 3rem;"></i>
-                <h4 class="fw-bold">Egyszerű átvétel</h4>
-                <p>A konyha azonnal látja a beérkező rendelésed, így mindent frissen, a nevedre csomagolva kapsz meg.</p>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 border-0 shadow-sm feature-card p-4 text-center">
-                <i class="bi bi-credit-card text-warning mb-3" style="font-size: 3rem;"></i>
-                <h4 class="fw-bold">Gyors fizetés</h4>
-                <p>Készpénz vagy kártya? Te döntöd el az átvételkor, de a rendelésed összegét már előre pontosan látod.</p>
-            </div>
+
+        <div class="text-center mt-4">
+            <h5 class="mb-4 text-muted">Készen állsz az első rendelésre?</h5>
+            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow-sm">
+                Regisztrálok a rendszerbe!
+            </a>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="text-center mt-5 pt-4">
+        <a asp-controller="Home" asp-action="Menu" class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow-sm">
+            Irány a rendelés! <i class="fa-solid fa-arrow-right ms-2"></i>
+        </a>
+    </div>
+}
+
 
 <!-- 3. SZEKCIÓ: Gyakori Kérdések (Interaktív Accordion) -->
 <div class="container mb-5 w-75">
