@@ -15,15 +15,6 @@ public class ProductController : Controller
 
     public IActionResult Index()
     {   
-        // TESZT ADATOK!!!
-        if (!_context.Products.Any())
-        {
-            _context.Products.AddRange(
-                new Product { Name = "Sajtburger", Price = 2500, Description = "Saját készítésű marhahúspogácsa", IsAvailable = true },
-                new Product { Name = "Csapolt Sör (0.5l)", Price = 1200, Description = "Hétszeresen szűrt, hideg", IsAvailable = true }
-            );
-            _context.SaveChanges(); 
-        }
 
         // 1. Lekérjük az összes terméket az adatbázisból egy listába
         var products = _context.Products.ToList();
