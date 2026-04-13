@@ -119,3 +119,36 @@ body {
 .toast-disappear-animacio {
     animation: smoothDisappear 0.5s ease-in forwards; /* 0.5 mp */
 }
+
+/* ========================================== */
+/* PRÉMIUM ARANY-ZÖLD POPOVER DIZÁJN        */
+/* ========================================== */
+
+.eto-popover {
+    /* Az ETO Arany színe a keretnek */
+    border: 2px solid #B5955C!important; 
+    border-radius: 15px !important;
+    /* Finom arany csillogás az üzenet körül */
+    box-shadow: 0 10px 30px rgba(197, 160, 89, 0.25) !important;
+    background-color: #ffffff !important;
+}
+
+.eto-popover .popover-body {
+    /* Sötétzöld szöveg a jó olvashatóságért */
+    color: #366E40!important;
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+    padding: 1.2rem 1.8rem !important;
+    text-align: center !important;
+    line-height: 1.5 !important;
+}
+
+
+.eto-popover.bs-popover-top .popover-arrow::before {
+    border-top-color: #B5955C !important;
+}
+
+/* Ha mobilon máshol jelenne meg, ezek is aranyak legyenek */
+.eto-popover.bs-popover-bottom .popover-arrow::before { border-bottom-color: #B5955C !important; }
+.eto-popover.bs-popover-start .popover-arrow::before { border-left-color: #B5955C !important; }
+.eto-popover.bs-popover-end .popover-arrow::before { border-right-color: #B5955C !important; }

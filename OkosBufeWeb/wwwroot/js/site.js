@@ -30,3 +30,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 3000); 
     }
 });
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // --- 1. Felugró ablak (Popover) inicializálása a Főoldali gombhoz ---
+    var popoverTrigger = document.getElementById('orderBtnNoAuth');
+    
+    if (popoverTrigger) {
+        var popover = new bootstrap.Popover(popoverTrigger, {
+            trigger: 'click',
+            customClass: 'eto-popover'
+        });
+
+        popoverTrigger.addEventListener('shown.bs.popover', function () {
+            // Amint megnyílt, elindítunk egy 4 másodperces (4000 ms) visszaszámlálást
+            setTimeout(function () {
+                popover.hide(); // Letelt az idő, bezárjuk a buborékot!
+            }, 3000);
+        });
+    }
+
+});

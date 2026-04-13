@@ -9,11 +9,26 @@
         <div class="col-lg-7 p-3 p-lg-5 pt-lg-3 text-center text-lg-start">
             <h1 class="display-4 fw-bold lh-1 mb-3 text-primary">Rendelj okosan,<br /> ne állj sorba!</h1>
             <p class="lead mb-4">Az ETO Okos Büfé elhozza neked a kényelmet. Állítsd össze a rendelésedet a telefonodon még az óra alatt, és vedd át frissen a szünetben, várakozás nélkül.</p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-                <!-- Ez a gomb viszi át a felhasználót az új étlap (Menu) oldalra! -->
-                <a asp-controller="Home" asp-action="Menu" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Éhes vagyok, rendelek!</a>
-                <a href="#how-it-works" class="btn btn-outline-secondary btn-lg px-4">Hogyan működik?</a>
-            </div>
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <a asp-controller="Home" asp-action="Menu" class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow">
+                    Éhes vagyok, rendelek! <i class="fa-solid fa-arrow-right ms-2"></i>
+                </a>
+            }
+            else
+            {
+                <button type="button" 
+                        class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow"
+                        id="orderBtnNoAuth"
+                        data-bs-toggle="popover" 
+                        data-bs-placement="top" 
+                        data-bs-content="Jelenleg nem vagy bejelentkezve. A rendeléshez kérlek jelentkezz be, vagy ha nincs fiókod regisztrálj!">
+                    Éhes vagyok, rendelek!
+                </button>
+                <a href="#how-it-works" class="btn btn-outline-secondary btn-lg px-4 py-3 fw-bold rounded-pill shadow-sm">
+                    Hogyan működik? <i class="fa-solid fa-arrow-down ms-2"></i>
+                </a>
+            }
         </div>
         <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden text-center">
             <!-- Ide tehetsz majd egy szép illusztrációt! -->
@@ -35,7 +50,7 @@
                 <div class="p-4 bg-white rounded-4 h-100 shadow-sm border border-light" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                     <i class="fa-solid fa-mobile-screen-button fa-3x mb-3" style="color: #347c47;"></i>
                     <h4 class="fw-bold">Rendelj mobilon</h4>
-                    <p class="text-muted mb-0">Állítsd össze a kedvenc szendvicsedet még a tanórán, pár kattintással.</p>
+                    <p class="text-muted mb-0">Állítsd össze a rendelésed bárhol a stadionban és rendeld meg a legközelebbi büféhez!</p>
                 </div>
             </div>
             
@@ -43,7 +58,7 @@
                 <div class="p-4 bg-white rounded-4 h-100 shadow-sm border border-light" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                     <i class="fa-solid fa-stopwatch fa-3x mb-3" style="color: #347c47;"></i>
                     <h4 class="fw-bold">Nincs sorban állás</h4>
-                    <p class="text-muted mb-0">Csak besétálsz a szünetben, és azonnal átveszed a névre szóló csomagodat.</p>
+                    <p class="text-muted mb-0">Csak besétálsz a szünetben, és azonnal átveszed a rendelésed!</p>
                 </div>
             </div>
             
@@ -75,7 +90,7 @@ else
 
 
 <!-- 3. SZEKCIÓ: Gyakori Kérdések (Interaktív Accordion) -->
-<div class="container mb-5 w-75">
+<div class="container mb-5 w-75" id = "how-it-works">
     <h3 class="text-center mb-4">Gyakori Kérdések</h3>
     <div class="accordion shadow-sm" id="faqAccordion">
         <div class="accordion-item">
