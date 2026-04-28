@@ -4,7 +4,6 @@
 
 @{
     ViewData["Title"] = "Főoldal - Étlap";
-    // 1. Lekérjük a kosár aktuális tartalmát a memóriából!
     var cart = Context.Session.GetObjectFromJson<List<OkosBufeWeb.Models.CartItem>>("Cart") ?? new List<OkosBufeWeb.Models.CartItem>();
 }
 
