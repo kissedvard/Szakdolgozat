@@ -70,7 +70,7 @@ body {
 
 
 .btn-primary {
-    background-color: #347c47 !important; /* A Te alap zölded */
+    background-color: #347c47 !important; 
     border-color: #347c47 !important;
     color: white !important;
     transition: all 0.3s ease !important;

@@ -38,6 +38,8 @@ namespace OkosBufeWeb.Controllers
             {
                 order.IsCompleted = true;
                 await _context.SaveChangesAsync();
+
+                TempData["Success"] = $"A #{id} számú rendelés sikeresen lezárva!";
             }
             return RedirectToAction(nameof(Index));
         }

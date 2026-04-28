@@ -126,4 +126,56 @@ public class CartController : Controller
 
         return Json(new {quantity = currentQuantity});
     }
+
+
+    //Rendelés leadása
+    public async Task<IActionResult> Checkout()
+    {
+        var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
+
+        if (cart == null || !cart.Any())
+        {
+            TempData["Error"] = "A kosarad üres, válassz valamit a büféből!";
+            return RedirectToAction("Menu", "Home");
+        }
+
+        //Új rendelés
+        var newOrder = new Order
+        {
+            OrderTime = DateTime.Now,
+            IsCompleted = false,
+            CustomerName = User.Identity?.Name ?? "Szurkoló",
+            OrderItems = new List<OrderItem>()
+
+        };
+
+        //Memóriából az adatbázisba töltés
+        foreach (var item in cart)
+        {
+            newOrder.OrderItems.Add(new OrderItem
+            {
+                ProductId = item.ProductId,
+                Quantity = item.Quantity
+            });
+        }
+
+        //Adatbázisba mentés
+
+        _context.Orders.Add(newOrder);
+        await _context.SaveChangesAsync();
+
+        //Kosár kiürítése
+        HttpContext.Session.Remove("Cart");
+
+        TempData["Success"] = "Sikeresen leadtad a rendelést!";
+
+        return RedirectToAction("Success", new{orderId = newOrder.Id} );
+    }
+
+    //Sikeres rendelés
+    public IActionResult Success(int orderId)
+    {
+        ViewBag.orderId = orderId;
+        return View();
+    }
 }
