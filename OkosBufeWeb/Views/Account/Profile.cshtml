@@ -14,7 +14,9 @@
             </div>
             
             <div class="card-body p-4">
-                <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom">Személyes adatok</h5>
+                <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom-gold">
+                    <i class="fa-solid fa-user me-2"></i>Személyes adatok
+                </h5>
                 
                 <div class="row mb-3">
                     <div class="col-sm-4 text-muted">Teljes név</div>
@@ -26,10 +28,10 @@
                     <div class="col-sm-8 fw-bold">@Model.Email</div>
                 </div>
 
-                <div class="mt-4 pt-3 border-top">
-                    <h4 class="fw-bold mb-3">
+                <div class="mt-4 pt-3 ">
+                    <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom-gold">
                         <i class="fa-solid fa-clock-rotate-left me-2"></i>Korábbi rendeléseim
-                    </h4>
+                    </h5>
 
                     @if (ViewBag.Orders == null || !((IEnumerable<OkosBufeWeb.Models.Order>)ViewBag.Orders).Any())
                     {

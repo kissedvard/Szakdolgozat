@@ -165,3 +165,7 @@ body {
 .eto-popover.bs-popover-bottom .popover-arrow::before { border-bottom-color: #B5955C !important; }
 .eto-popover.bs-popover-start .popover-arrow::before { border-left-color: #B5955C !important; }
 .eto-popover.bs-popover-end .popover-arrow::before { border-right-color: #B5955C !important; }
+
+.border-bottom-gold {
+    border-bottom: 2px solid #B5955C !important;
+}
