@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OkosBufeWeb.Models;
 using OkosBufeWeb.Data;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Security.Claims;
 
 namespace OkosBufeWeb.Controllers;
 
@@ -145,7 +146,8 @@ public class CartController : Controller
             OrderTime = DateTime.Now,
             IsCompleted = false,
             CustomerName = User.Identity?.Name ?? "Szurkoló",
-            OrderItems = new List<OrderItem>()
+            OrderItems = new List<OrderItem>(),
+            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty
 
         };
 

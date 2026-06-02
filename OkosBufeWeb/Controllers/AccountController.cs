@@ -1,6 +1,10 @@
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
+using OkosBufeWeb.Data;
 using OkosBufeWeb.Models;
 using OkosBufeWeb.ViewModels;
 
@@ -10,12 +14,15 @@ namespace OkosBufeWeb.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
+
 
         // Regisztráció
 
@@ -102,6 +109,17 @@ namespace OkosBufeWeb.Controllers
                 FullName = user.FullName,
                 Email = user.Email!
             };
+            
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ViewBag.Orders = await _context.Orders
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.OrderTime)
+                .ToListAsync();
+
             return View(model);
         }
     }  
