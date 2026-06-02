@@ -54,7 +54,7 @@ body {
 }
 
 :root {
-    /* Színek */
+    
     --bs-primary: #366E40 !important;
     --bs-secondary: #B5955C !important;
     --bs-body-bg: #F4F2EB !important;
@@ -70,18 +70,31 @@ body {
 
 
 .btn-primary {
-    background-color: #347c47 !important; 
-    border-color: #347c47 !important;
+    background-color: #366E40!important; 
+    border-color: #366E40 !important;
     color: white !important;
     transition: all 0.3s ease !important;
 }
 .btn-primary:hover {
     background-color: #2B5934; 
     border-color: #2B5934;
-    transform: translateY(-2px) !important; /* Picit felemelkedik a gomb */
+    transform: translateY(-2px) !important; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
+.btn-custom {
+    background-color: #366E40!important; 
+    border-color: #366E40 !important;
+    color: white !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-custom:hover {
+    background-color: #2B5934; 
+    border-color: #2B5934;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
 
 .btn-primary:focus, 
 .btn-primary:active, 
