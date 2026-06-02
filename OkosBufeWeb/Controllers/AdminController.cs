@@ -43,5 +43,17 @@ namespace OkosBufeWeb.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> GetActiveOrdersPartial()
+        {
+            var orders = await _context.Orders
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .Where(o => !o.IsCompleted)
+                .OrderBy(o => o.OrderTime)
+                .ToListAsync();
+
+            return PartialView("_OrderCards", orders);
+        }
     }
 }
