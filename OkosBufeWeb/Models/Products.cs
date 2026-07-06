@@ -19,6 +19,5 @@ public class Product
     public string? Description {get; set;} 
 
     public bool IsAvailable {get; set;} = true;
-
     public string Category {get; set;} = string.Empty;
 }

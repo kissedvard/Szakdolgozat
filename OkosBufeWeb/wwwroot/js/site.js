@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 3000); 
     }
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     
     // --- 1. Felugró ablak (Popover) inicializálása a Főoldali gombhoz ---
