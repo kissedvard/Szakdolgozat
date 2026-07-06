@@ -13,50 +13,60 @@
 </div>
 
 
+@* Csoportosítjuk a termékeket a Kategória oszlop alapján *@
+@foreach (var categoryGroup in Model.GroupBy(p => p.Category))
+{
+    <h2 class="fw-bold text-dark mt-5 mb-4 border-bottom pb-2">
+        @categoryGroup.Key
+    </h2>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var item in Model)
-    {
-        var cartItem = cart.FirstOrDefault(c => c.ProductId == item.Id);
-        int quantityInCart = cartItem != null ? cartItem.Quantity : 0;
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 row-cols-xxl-4 g-4">
+        
+        @foreach (var item in categoryGroup)
+        {
+            // EZT A RÉSZT KÜLDTED TE – TELJESEN ÉRINTETLENÜL HAGYVA:
+            var cartItem = cart.FirstOrDefault(c => c.ProductId == item.Id);
+            int quantityInCart = cartItem != null ? cartItem.Quantity : 0;
 
-        <div class="col">
-            <div class="card h-100 shadow-sm border-0">
-                <div class="card-body text-center">
-                    <h5 class="card-title fw-bold">@item.Name</h5>
-                    <h6 class="text-success fw-bold mb-3">@item.Price Ft</h6>
-                    <p class="card-text text-muted small">@item.Description</p>
-                </div>
-                
-                <div class="card-footer bg-transparent border-0 text-center pb-3">
-                    @if (quantityInCart == 0)
-                    {
-                        <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="btn btn-primary w-100 rounded-pill fw-bold">
-                            <i class="bi bi-cart-plus"></i> Kosárba teszem
-                        </a>
-                    }
-                    else
-                    {
-                        <div class="btn btn-primary w-100 rounded-pill d-flex justify-content-between align-items-center px-4 user-select-none">
-                            
-                            <a href="javascript:void(0)" onclick="updateQuantity(@item.Id, 'decrease')" class="text-white text-decoration-none fw-bold fs-5">
-                                <i class="fa-solid fa-minus"></i>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0" style="min-height: 280px">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">@item.Name</h5>
+                        <h6 class="text-success fw-bold mb-3">@item.Price Ft</h6>
+                        <p class="card-text text-muted small">@item.Description</p>
+                    </div>
+                    
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        @if (quantityInCart == 0)
+                        {
+                            <a asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id" class="btn btn-primary w-100 rounded-pill fw-bold">
+                                <i class="bi bi-cart-plus"></i> Kosárba teszem
                             </a>
-                            
-                            <span class="text-white fw-bold pointer-event-none" id="qty-@item.Id">
-                                @quantityInCart db
-                            </span>
-                            
-                            <a href="javascript:void(0)" onclick="updateQuantity(@item.Id, 'add')" class="text-white text-decoration-none fw-bold fs-5">
-                                <i class="fa-solid fa-plus"></i>
-                            </a>
+                        }
+                        else
+                        {
+                            <div class="btn btn-primary w-100 rounded-pill d-flex justify-content-between align-items-center px-4 user-select-none">
+                                
+                                <a href="javascript:void(0)" onclick="updateQuantity(@item.Id, 'decrease')" class="text-white text-decoration-none fw-bold fs-5">
+                                    <i class="fa-solid fa-minus"></i>
+                                </a>
+                                
+                                <span class="text-white fw-bold pointer-event-none" id="qty-@item.Id">
+                                    @quantityInCart db
+                                </span>
+                                
+                                <a href="javascript:void(0)" onclick="updateQuantity(@item.Id, 'add')" class="text-white text-decoration-none fw-bold fs-5">
+                                    <i class="fa-solid fa-plus"></i>
+                                </a>
 
-                        </div>
-                    }
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+}
 </div>
 
 @if (!Model.Any())

@@ -152,3 +152,7 @@ body {
 .eto-popover.bs-popover-bottom .popover-arrow::before { border-bottom-color: #B5955C !important; }
 .eto-popover.bs-popover-start .popover-arrow::before { border-left-color: #B5955C !important; }
 .eto-popover.bs-popover-end .popover-arrow::before { border-right-color: #B5955C !important; }
+
+.card.h-100 {
+    min-height: 280px; /* Ezt az értéket a termékeid méretéhez igazíthatod */
+}
