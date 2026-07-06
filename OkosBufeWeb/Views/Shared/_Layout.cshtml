@@ -78,9 +78,17 @@
             &copy; 2026 - OkosBufeWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <a asp-controller="Cart" asp-action="Index" class="btn btn-custom sticky-cart-btn shadow-lg" id="floatingCart">
+        <i class="fa-solid fa-cart-shopping fs-3"></i>
+    </a>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    
 </body>
 </html>

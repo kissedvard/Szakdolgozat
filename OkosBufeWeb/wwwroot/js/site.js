@@ -48,5 +48,23 @@ document.addEventListener("DOMContentLoaded", function() {
             }, 3000);
         });
     }
+});
 
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Kosár script elindult!"); 
+    
+    const floatingCart = document.getElementById("floatingCart");
+    
+    
+    if (!floatingCart) {
+        return; 
+    }
+    const headerHeight = 100; 
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > headerHeight) {
+            floatingCart.classList.add("visible");
+        } else {
+            floatingCart.classList.remove("visible");
+        }
+    });
 });

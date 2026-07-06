@@ -14,7 +14,9 @@
             </div>
             
             <div class="card-body p-4">
-                <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom">Személyes adatok</h5>
+                <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom-gold">
+                    <i class="fa-solid fa-user me-2"></i>Személyes adatok
+                </h5>
                 
                 <div class="row mb-3">
                     <div class="col-sm-4 text-muted">Teljes név</div>
@@ -26,10 +28,158 @@
                     <div class="col-sm-8 fw-bold">@Model.Email</div>
                 </div>
 
-                <div class="d-grid gap-2 mt-4 pt-3 border-top">
-                    <button class="btn btn-outline-primary fw-bold" disabled>
-                        <i class="fa-solid fa-clock-rotate-left"></i> Korábbi rendeléseim (Hamarosan)
-                    </button>
+                <div class="mt-4 pt-3 ">
+                    <h5 class="fw-bold text-muted mb-4 pb-2 border-bottom-gold">
+                        <i class="fa-solid fa-clock-rotate-left me-2"></i>Korábbi rendeléseim
+                    </h5>
+
+                    @if (ViewBag.Orders == null || !((IEnumerable<OkosBufeWeb.Models.Order>)ViewBag.Orders).Any())
+                    {
+                        <div class="alert alert-info text-center py-3 rounded-3">
+                            Még nem adtál le rendelést.
+                        </div>
+                    }
+                    else
+                    {
+                        @* C# nyelven kettévágjuk a listát *@
+                        var allOrders = (IEnumerable<OkosBufeWeb.Models.Order>)ViewBag.Orders;
+                        var recentOrders = allOrders.Take(2); // Az első 2 legfrissebb
+                        var olderOrders = allOrders.Skip(2);  // Az összes többi, ami a 2. után jön
+
+                        <div class="accordion" id="ordersAccordion">
+
+                            @foreach (var order in recentOrders)
+                            {
+                                <div class="accordion-item mb-2 border rounded-3 overflow-hidden shadow-sm">
+                                    <h2 class="accordion-header" id="heading-@order.Id">
+                                        <button class="accordion-button collapsed d-flex justify-content-between align-items-center py-3 px-4" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapse-@order.Id" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapse-@order.Id">
+
+                                            <div class="d-flex align-items-center w-100 justify-content-between me-3">
+                                                <div>
+                                                    <span class="fw-bold fs-5 text-dark">#@order.Id</span>
+                                                    <small class="text-muted ms-3">@order.OrderTime.ToString("yyyy.MM.dd. HH:mm")</small>
+                                                </div>
+                                                <div>
+                                                    @if (order.IsCompleted)
+                                                    {
+                                                        <span class="badge bg-success px-3 py-2 rounded-pill">Teljesítve</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Folyamatban</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse-@order.Id" class="accordion-collapse collapse" aria-labelledby="heading-@order.Id" data-bs-parent="#ordersAccordion">
+                                        <div class="accordion-body bg-light p-4 border-top">
+                                            <span class="text-muted small d-block mb-2">Rendelt termékek:</span>
+                                            <ul class="list-unstyled mb-0 fs-5">
+                                                @foreach (var item in order.OrderItems)
+                                                {
+                                                    <li class="mb-1 fw-bold text-dark">
+                                                        <span class="text-success me-2">@(item.Quantity)x</span>
+                                                        @(item.Product?.Name ?? "Ismeretlen termék")
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (olderOrders.Any())
+                            {
+                                <div class="collapse" id="olderOrdersCollapse">
+                                    @foreach (var order in olderOrders)
+                                    {
+                                        <div class="accordion-item mb-2 border rounded-3 overflow-hidden shadow-sm">
+                                            <h2 class="accordion-header" id="heading-@order.Id">
+                                                <button class="accordion-button collapsed d-flex justify-content-between align-items-center py-3 px-4" 
+                                                        type="button" 
+                                                        data-bs-toggle="collapse" 
+                                                        data-bs-target="#collapse-@order.Id" 
+                                                        aria-expanded="false" 
+                                                        aria-controls="collapse-@order.Id">
+
+                                                    <div class="d-flex align-items-center w-100 justify-content-between me-3">
+                                                        <div>
+                                                            <span class="fw-bold fs-5 text-dark">#@order.Id</span>
+                                                            <small class="text-muted ms-3">@order.OrderTime.ToString("yyyy.MM.dd. HH:mm")</small>
+                                                        </div>
+                                                        <div>
+                                                            @if (order.IsCompleted)
+                                                            {
+                                                                <span class="badge bg-success px-3 py-2 rounded-pill">Teljesítve</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill">Folyamatban</span>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="collapse-@order.Id" class="accordion-collapse collapse" aria-labelledby="heading-@order.Id" data-bs-parent="#ordersAccordion">
+                                                <div class="accordion-body bg-light p-4 border-top">
+                                                    <span class="text-muted small d-block mb-2">Rendelt termékek:</span>
+                                                    <ul class="list-unstyled mb-0 fs-5">
+                                                        @foreach (var item in order.OrderItems)
+                                                        {
+                                                            <li class="mb-1 fw-bold text-dark">
+                                                                <span class="text-success me-2">@(item.Quantity)x</span>
+                                                                @(item.Product?.Name ?? "Ismeretlen termék")
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button class="btn btn-custom fw-bold py-2 shadow-sm" 
+                                            type="button" 
+                                            data-bs-toggle="collapse" 
+                                            data-bs-target="#olderOrdersCollapse" 
+                                            aria-expanded="false" 
+                                            aria-controls="olderOrdersCollapse"
+                                            id="btnToggleOrders">
+                                        <i class="fa-solid fa-chevron-down me-2" id="toggleIcon"></i> 
+                                        <span id="toggleText">További rendelések megjelenítése</span>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+
+                @section Scripts {
+                    <script>
+                        const olderOrdersCollapse = document.getElementById('olderOrdersCollapse');
+                        const toggleText = document.getElementById('toggleText');
+                        const toggleIcon = document.getElementById('toggleIcon');
+
+                        if(olderOrdersCollapse) {
+                            olderOrdersCollapse.addEventListener('show.bs.collapse', function () {
+                                toggleText.innerText = "Kevesebb rendelés mutatása";
+                                toggleIcon.className = "fa-solid fa-chevron-up me-2";
+                            });
+
+                            olderOrdersCollapse.addEventListener('hide.bs.collapse', function () {
+                                toggleText.innerText = "További rendelések megjelenítése";
+                                toggleIcon.className = "fa-solid fa-chevron-down me-2";
+                            });
+                        }
+                    </script>
+                }
 
                     <form asp-controller="Account" asp-action="Logout" method="post" class="d-grid mt-2">
                         <button type="submit" class="btn btn-danger fw-bold">

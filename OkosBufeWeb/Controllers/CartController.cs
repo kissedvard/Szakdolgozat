@@ -3,16 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using OkosBufeWeb.Models;
 using OkosBufeWeb.Data;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.SignalR;
+using OkosBufeWeb.Hubs;
 
 namespace OkosBufeWeb.Controllers;
 
 public class CartController : Controller
 {
     private readonly ApplicationDbContext _context;
-    
-    public CartController(ApplicationDbContext context)
+    private readonly IHubContext<OrderHub> _hubContext;
+    public CartController(ApplicationDbContext context, IHubContext<OrderHub> hubContext)
     {
         _context = context;
+        _hubContext = hubContext;
     }
 
     public IActionResult Index()
@@ -145,7 +149,8 @@ public class CartController : Controller
             OrderTime = DateTime.Now,
             IsCompleted = false,
             CustomerName = User.Identity?.Name ?? "Szurkoló",
-            OrderItems = new List<OrderItem>()
+            OrderItems = new List<OrderItem>(),
+            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty
 
         };
 
@@ -163,6 +168,8 @@ public class CartController : Controller
 
         _context.Orders.Add(newOrder);
         await _context.SaveChangesAsync();
+
+        await _hubContext.Clients.All.SendAsync("UpdateOrderDisplay");
 
         //Kosár kiürítése
         HttpContext.Session.Remove("Cart");

@@ -1,5 +1,6 @@
 using System.Security.Principal;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OkosBufeWeb.Data;
@@ -26,6 +27,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
+builder.Services.AddSignalR();
 
 builder.Services.ConfigureApplicationCookie(Options =>
 {
@@ -58,6 +60,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+    app.MapHub<OkosBufeWeb.Hubs.OrderHub>("/orderhub");
 
 
 app.Run();
