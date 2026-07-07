@@ -1,10 +1,18 @@
 @model IEnumerable<OkosBufeWeb.Models.Product>
 @using Microsoft.AspNetCore.Http
 @using OkosBufeWeb.Helpers
+@using Microsoft.EntityFrameworkCore
+
+@inject OkosBufeWeb.Data.ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Főoldal - Étlap";
     var cart = Context.Session.GetObjectFromJson<List<OkosBufeWeb.Models.CartItem>>("Cart") ?? new List<OkosBufeWeb.Models.CartItem>();
+
+    var favoriteOrder = await _context.Orders
+    .Include(o => o.OrderItems)
+    .ThenInclude(i => i.Product)
+    .FirstOrDefaultAsync(o => o.isFavorite);
 }
 
 <div class="text-center mb-5">
@@ -12,8 +20,41 @@
     <p class="lead">Válaszd ki a kedvenceidet, és rendeld meg sorban állás nélkül.</p>
 </div>
 
+@if (favoriteOrder != null)
+{
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-10 col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4" style="background-color: #f7f9f6; border: 2px solid #3e6d42 !important;">
+                <div class="card-body p-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+                    
+                    <div class="mb-3 mb-md-0 text-center text-md-start">
+                        <h4 class="fw-bold mb-1" style="color: #3e6d42;">
+                            <i class="fa-solid fa-star text-warning me-2"></i>A Szokásos Menüd
+                        </h4>
+                        <p class="text-muted small mb-2">Egyetlen kattintással a kosaradba teheted a kedvenceidet!</p>
+                        
+                        <div class="fw-bold text-dark">
+                            @foreach (var item in favoriteOrder.OrderItems)
+                            {
+                                <span>@item.Quantity x @(item.Product?.Name ?? "Ismeretlen termék") @(item != favoriteOrder.OrderItems.Last() ? " + " : "")</span>
+                            }
+                        </div>
+                    </div>
 
-@* Csoportosítjuk a termékeket a Kategória oszlop alapján *@
+                    <form asp-controller="Cart" asp-action="ReorderUsual" method="post" class="flex-shrink-0 mt-3 mt-md-0">
+                        <input type="hidden" name="orderId" value="@favoriteOrder.Id" />
+                        <button type="submit" class="btn text-white rounded-pill fw-bold px-4 py-2 shadow-sm" style="background-color: #3e6d42; transition: transform 0.2s;">
+                            <i class="fa-solid fa-bolt me-2"></i> Kérem a szokásosat
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* Kategória szerint csoportosítva *@
 @foreach (var categoryGroup in Model.GroupBy(p => p.Category))
 {
     <h2 class="fw-bold text-dark mt-5 mb-4 border-bottom pb-2">

@@ -10,5 +10,7 @@ namespace OkosBufeWeb.Models
 
         public List<OrderItem> OrderItems {get; set;} = new List<OrderItem>();
 
+        public bool isFavorite {get; set;} = false;
+
     }
 }

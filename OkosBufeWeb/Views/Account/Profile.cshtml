@@ -41,13 +41,15 @@
                     }
                     else
                     {
-                        @* C# nyelven kettévágjuk a listát *@
                         var allOrders = (IEnumerable<OkosBufeWeb.Models.Order>)ViewBag.Orders;
                         var recentOrders = allOrders.Take(2); // Az első 2 legfrissebb
                         var olderOrders = allOrders.Skip(2);  // Az összes többi, ami a 2. után jön
 
                         <div class="accordion" id="ordersAccordion">
 
+                            @* ========================================== *@
+                            @* 1. BLOKK: A KÉT LEGFRISSEBB RENDELÉS       *@
+                            @* ========================================== *@
                             @foreach (var order in recentOrders)
                             {
                                 <div class="accordion-item mb-2 border rounded-3 overflow-hidden shadow-sm">
@@ -89,11 +91,32 @@
                                                     </li>
                                                 }
                                             </ul>
+
+                                            <div class="d-flex justify-content-end mt-3 pt-3 border-top border-secondary-subtle">
+                                                @if (!order.isFavorite)
+                                                {
+                                                    <form asp-controller="Cart" asp-action="SetUsualOrder" method="post" class="m-0">
+                                                        <input type="hidden" name="orderId" value="@order.Id" />
+                                                        <button type="submit" class="btn btn-outline-warning rounded-pill btn-sm fw-bold shadow-sm transition-all" title="Legyen ez a szokásos menüm!">
+                                                            <i class="fa-regular fa-star me-1"></i> Beállítom kedvencnek
+                                                        </button>
+                                                    </form>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning text-dark rounded-pill px-3 py-2 shadow-sm">
+                                                        <i class="fa-solid fa-star me-1"></i> Ez a kedvenc menüd
+                                                    </span>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             }
 
+                            @* ========================================== *@
+                            @* 2. BLOKK: TOVÁBBI (RÉGEBBI) RENDELÉSEK      *@
+                            @* ========================================== *@
                             @if (olderOrders.Any())
                             {
                                 <div class="collapse" id="olderOrdersCollapse">
@@ -113,6 +136,7 @@
                                                             <span class="fw-bold fs-5 text-dark">#@order.Id</span>
                                                             <small class="text-muted ms-3">@order.OrderTime.ToString("yyyy.MM.dd. HH:mm")</small>
                                                         </div>
+                                                        
                                                         <div>
                                                             @if (order.IsCompleted)
                                                             {
@@ -138,6 +162,24 @@
                                                             </li>
                                                         }
                                                     </ul>
+
+                                                    <div class="d-flex justify-content-end mt-3 pt-3 border-top border-secondary-subtle">
+                                                        @if (!order.isFavorite)
+                                                        {
+                                                            <form asp-controller="Cart" asp-action="SetUsualOrder" method="post" class="m-0">
+                                                                <input type="hidden" name="orderId" value="@order.Id" />
+                                                                <button type="submit" class="btn btn-outline-warning rounded-pill btn-sm fw-bold shadow-sm transition-all" title="Legyen ez a szokásos menüm!">
+                                                                    <i class="fa-regular fa-star me-1"></i> Beállítom kedvencnek
+                                                                </button>
+                                                            </form>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-warning text-dark rounded-pill px-3 py-2 shadow-sm">
+                                                                <i class="fa-solid fa-star me-1"></i> Ez a kedvenc menüd
+                                                            </span>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

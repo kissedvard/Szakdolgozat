@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System.Security.Claims;
 using Microsoft.AspNetCore.SignalR;
 using OkosBufeWeb.Hubs;
+using Microsoft.EntityFrameworkCore;
 
 namespace OkosBufeWeb.Controllers;
 
@@ -184,5 +185,87 @@ public class CartController : Controller
     {
         ViewBag.orderId = orderId;
         return View();
+    }
+
+
+
+    [HttpPost]
+    public async Task<IActionResult> SetUsualOrder(int orderId)
+    {
+        // 1. Kikeressük a célzott rendelést
+        var targetOrder = await _context.Orders.FindAsync(orderId);
+        if (targetOrder == null) 
+        {
+            return NotFound();
+        }
+
+        var previousFavorites = await _context.Orders.Where(o => o.isFavorite).ToListAsync();
+        
+        foreach (var order in previousFavorites)
+        {
+            order.isFavorite = false;
+        }
+
+        // 3. Ezt a konkrét rendelést beállítjuk az egyetlen kedvencnek
+        targetOrder.isFavorite = true;
+        
+        // 4. Mentsük a változásokat az adatbázisba
+        await _context.SaveChangesAsync();
+
+        // Visszairányítjuk a felhasználót a Profil / Rendelések oldalra
+        // (Írd át a "Profile" és "Account" neveket a te pontos útvonaladra!)
+        return RedirectToAction("Profile", "Account"); 
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> ReorderUsual(int orderId)
+    {
+        // 1. Megkeressük a régi rendelést, és behúzzuk a benne lévő termékeket (és a termékek adatait)
+        var oldOrder = await _context.Orders
+            .Include(o => o.OrderItems)     // Ha nálad az Order modellben 'Items' a neve, cseréld arra!
+            .ThenInclude(i => i.Product)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+
+        if (oldOrder == null) 
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        // 2. Lekérjük a jelenlegi kosarat a Sessionből (vagy ha üres, létrehozunk egy új listát)
+        var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart") ?? new List<CartItem>();
+
+        // 3. Végigmegyünk a kedvenc rendelés tételein
+        foreach (var oldItem in oldOrder.OrderItems)
+        {
+            // Megnézzük, van-e MÁR ilyen termék a jelenlegi kosárban
+            var existingCartItem = cart.FirstOrDefault(c => c.ProductId == oldItem.ProductId);
+            
+            if (existingCartItem != null)
+            {
+                // Ha már benne van, hozzáadjuk a mennyiséget (így nem lesz duplikált sor a kosárban)
+                existingCartItem.Quantity += oldItem.Quantity;
+            }
+            else
+            {
+                // Ha nincs benne, újként hozzáadjuk
+                cart.Add(new CartItem 
+                { 
+                    ProductId = oldItem.ProductId, 
+    
+                    // Itt a varázslat: ProductName-t és Price-t kell használnunk!
+                    ProductName = oldItem.Product.Name, 
+                    Price = oldItem.Product.Price, 
+    
+                    Quantity = oldItem.Quantity
+                });
+            }
+        }
+
+        // 4. Visszamentjük a frissített kosarat a Sessionbe
+        HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+        // 5. Átdobjuk a felhasználót a Kosár oldalra, hogy azonnal lássa és leadhasd a rendelést
+        return RedirectToAction("Index", "Cart");
     }
 }
