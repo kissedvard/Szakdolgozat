@@ -35,6 +35,9 @@
     
                         @if (User.Identity!.IsAuthenticated)
                         {
+                            <a asp-controller="Cart" asp-action="Index" class="btn btn-primary rounded-circle shadow-sm d-flex justify-content-center align-items-center flex-shrink-0" style="width: 48px; height: 48px; transition: transform 0.2s;" title="Kosár">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
                             <a asp-controller="Account" asp-action="Profile" class="btn btn-primary rounded-circle shadow-sm d-flex justify-content-center align-items-center flex-shrink-0" style="width: 48px; height: 48px; transition: transform 0.2s;" title="Fiókom">
                                 <i class="fa-solid fa-user"></i>
                             </a>
@@ -46,10 +49,7 @@
                             </a>
                         }
 
-                        <a asp-controller="Cart" asp-action="Index" class="btn btn-primary rounded-circle shadow-sm d-flex justify-content-center align-items-center flex-shrink-0 sticky-cart-btn" id ="float-cart"style="width: 48px; height: 48px; transition: transform 0.2s;" title="Kosár">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                    </div>
+                        
                 </div>
             </div>
         </nav>
@@ -87,7 +87,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
     <script src="~/js/kds-signalr.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
