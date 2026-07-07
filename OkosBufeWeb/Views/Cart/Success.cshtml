@@ -11,14 +11,16 @@
             </div>
             
             <h1 class="display-4 fw-bold text-dark mb-3">Rendelés rögzítve!</h1>
-            <p class="lead text-muted mb-5">
+            
+            <p class="lead text-muted mb-5" id="success-status-text-@ViewBag.OrderId" style="transition: all 0.3s ease;">
                 A konyha megkapta a rendelésedet. Hamarosan kész, ugorj a büféhez a szünetben!
             </p>
 
             <div class="card border-0 shadow-lg mb-5 rounded-4" style="background-color: #f8f9fa; border-top: 8px solid #C5A059 !important;">
                 <div class="card-body p-5">
                     <h5 class="text-uppercase text-muted fw-bold mb-3">A te sorszámod:</h5>
-                    <div class="display-1 fw-bolder text-dark">
+                    
+                    <div class="display-1 fw-bolder text-dark" id="success-order-number-@ViewBag.OrderId" style="transition: all 0.3s ease;">
                         #@ViewBag.OrderId
                     </div>
                 </div>
@@ -31,3 +33,4 @@
         </div>
     </div>
 </div>
+
