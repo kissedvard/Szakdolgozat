@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Kosár script elindult!"); 
     
     const floatingCart = document.getElementById("floatingCart");
     

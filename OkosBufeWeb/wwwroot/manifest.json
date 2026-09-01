@@ -1,0 +1,21 @@
+{
+  "name": "OkosBüfé",
+  "short_name": "Okos büfé",
+  "description": "Rendelj gyorsan és egyszerűen!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#B9975B",
+  "icons": [
+    {
+      "src": "/images/192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
