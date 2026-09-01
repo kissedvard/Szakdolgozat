@@ -136,6 +136,12 @@ public class CartController : Controller
     //Rendelés leadása
     public async Task<IActionResult> Checkout()
     {
+        if (User.Identity == null || !User.Identity.IsAuthenticated)
+        {
+            TempData["Error"] = "A rendelés leadásához be kell jelentkezned!";
+            return RedirectToAction("Login", "Account");
+        }
+
         var cart = HttpContext.Session.GetObjectFromJson<List<CartItem>>("Cart");
 
         if (cart == null || !cart.Any())
@@ -254,8 +260,8 @@ public class CartController : Controller
                     ProductId = oldItem.ProductId, 
     
                     // Itt a varázslat: ProductName-t és Price-t kell használnunk!
-                    ProductName = oldItem.Product.Name, 
-                    Price = oldItem.Product.Price, 
+                    ProductName = oldItem.Product?.Name ?? "Törölt termék", 
+                    Price = oldItem.Product?.Price ?? 0, 
     
                     Quantity = oldItem.Quantity
                 });

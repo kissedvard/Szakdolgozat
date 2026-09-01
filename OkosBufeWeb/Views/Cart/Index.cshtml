@@ -70,11 +70,22 @@ else
                         </span>
                     </div>
 
-                    <form asp-controller="Cart" asp-action="Checkout" method="post" class="mb-2">
-                        <button type="submit" class="btn btn-primary btn-lg w-100">
-                            Tovább a fizetéshez
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <!-- HA BE VAN JELENTKEZVE: Sima űrlap beküldés -->
+                        <form asp-controller="Cart" asp-action="Checkout" method="post">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fa-solid fa-check me-2"></i> Rendelés leadása
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <!-- HA NINCS BEJELENTKEZVE: A gomb egy felugró ablakot (Modal) nyit meg -->
+                        <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#loginWarningModal">
+                            <i class="fa-solid fa-check me-2"></i> Rendelés leadása
                         </button>
-                    </form>
+}
                     <a asp-controller="Home" asp-action="Menu" class="btn btn-outline-secondary w-100">
                         Vissza a menühöz
                     </a>
@@ -83,3 +94,33 @@ else
         </div>
     </div>
 }
+<!-- BEJELENTKEZÉS FIGYELMEZTETŐ FELUGRÓ ABLAK -->
+<div class="modal fade" id="loginWarningModal" tabindex="-1" aria-labelledby="loginWarningModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            
+            <div class="modal-header bg-warning text-dark border-0 rounded-top-4" style="background-color: #B9975B !important;">
+                <h5 class="modal-title fw-bold" id="loginWarningModalLabel">
+                    <i class="fa-solid fa-circle-exclamation me-2"></i> Bejelentkezés szükséges
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Bezárás"></button>
+            </div>
+            
+            <div class="modal-body p-4 text-center">
+                <p class="fs-5 mb-4 text-dark">
+                    A rendelés leadásához és a kedvencek elmentéséhez kérlek, jelentkezz be a fiókodba!
+                </p>
+                
+                <div class="d-grid gap-3">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary fw-bold py-2 shadow-sm">
+                        <i class="fa-solid fa-right-to-bracket me-2"></i> Bejelentkezés
+                    </a>
+                    <a asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary fw-bold py-2 transition-all">
+                        Nincs még fiókod? Regisztrálj!
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

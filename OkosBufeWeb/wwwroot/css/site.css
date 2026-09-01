@@ -56,7 +56,7 @@ body {
 :root {
     
     --bs-primary: #366E40 !important;
-    --bs-secondary: #B5955C !important;
+    --bs-secondary: #B9975B !important;
     --bs-body-bg: #F4F2EB !important;
     
     /* Gombok körüli glow effekt */
@@ -139,7 +139,7 @@ body {
 
 .eto-popover {
     /* Az ETO Arany színe a keretnek */
-    border: 2px solid #B5955C!important; 
+    border: 2px solid #B9975B!important; 
     border-radius: 15px !important;
     /* Finom arany csillogás az üzenet körül */
     box-shadow: 0 10px 30px rgba(197, 160, 89, 0.25) !important;
@@ -158,16 +158,16 @@ body {
 
 
 .eto-popover.bs-popover-top .popover-arrow::before {
-    border-top-color: #B5955C !important;
+    border-top-color: #B9975B !important;
 }
 
 /* Ha mobilon máshol jelenne meg, ezek is aranyak legyenek */
-.eto-popover.bs-popover-bottom .popover-arrow::before { border-bottom-color: #B5955C !important; }
-.eto-popover.bs-popover-start .popover-arrow::before { border-left-color: #B5955C !important; }
-.eto-popover.bs-popover-end .popover-arrow::before { border-right-color: #B5955C !important; }
+.eto-popover.bs-popover-bottom .popover-arrow::before { border-bottom-color: #B9975B !important; }
+.eto-popover.bs-popover-start .popover-arrow::before { border-left-color: #B9975B !important; }
+.eto-popover.bs-popover-end .popover-arrow::before { border-right-color: #B9975B !important; }
 
 .border-bottom-gold {
-    border-bottom: 2px solid #B5955C !important;
+    border-bottom: 2px solid #B9975B !important;
 }
 
 /* A lebegő kosár gomb */
